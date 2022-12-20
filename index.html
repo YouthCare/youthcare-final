@@ -2,43 +2,9 @@
 
 session_start();
 
-$koneksi = mysqli_connect('localhost','root','','youthcare_db');
-
-if (isset($_POST["register"])) {
-
-	$username = $_POST['username'];
-	$email = $_POST['email'];
-	$password = $_POST['password'];
-
-
-	$sql = "INSERT INTO tb_user(username,email,password)VALUES('$username','$email','$password')";
-	$result = mysqli_query($koneksi, $sql);
-
-	if ($result) {
-		header("location: login.php");
-
-	} else {
-
-
-		echo 'error';
-	}
-}
-
-if (isset($_POST["login"])) {
-	$username = $_POST['loginusername'];
-	$password = $_POST['loginpassword'];
-
-	$sql = "SELECT * FROM tb_user WHERE username='$username' AND password='$password'";
-	$result = mysqli_query($koneksi, $sql);
-	if ($result->num_rows > 0) {
-
-		$_SESSION["login"] = true;
-		$_SESSION['user_name'] = $username;
-		header("Location: index.php");
-	} else {
-		echo "<script>alert('Email atau password Anda salah. Silahkan coba lagi!')</script>";
-
-	}
+if (!isset($_SESSION["login"])) {
+	header("Location: login.php");
+	exit;
 }
 
 ?>
